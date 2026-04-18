@@ -87,6 +87,7 @@ agents/
 - Useful reference for understanding the agent loop: `agents/agent.py` → `run()` method.
 - Tested on Python 3.11.9; haven't tried 3.12 yet.
 - The agent loop runs every 60s by default — bumped mine to 120s to reduce API calls during testing.
+- Noticed the agent sometimes errors silently when a market has no open orders; added a `try/except` around the order fetch in my local copy (`connectors/clob.py` ~line 84).
 
 ## Contributing
 
