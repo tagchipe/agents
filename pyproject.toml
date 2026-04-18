@@ -68,4 +68,5 @@ ignore_missing_imports = true
 testpaths = ["tests"]
 asyncio_mode = "auto"
 # removed --cov flags so quick test runs don't require coverage report
-addopts = "-v"
+# -s to show print statements during debugging
+addopts = "-v -s"
