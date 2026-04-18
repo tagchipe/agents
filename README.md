@@ -81,6 +81,11 @@ agents/
 └── tests/            # Test suite
 ```
 
+## Notes (Personal)
+
+- Running this in paper-trading / read-only mode for now — `POLYMARKET_API_KEY` left blank disables order placement.
+- Useful reference for understanding the agent loop: `agents/agent.py` → `run()` method.
+
 ## Contributing
 
 1. Fork the repository
