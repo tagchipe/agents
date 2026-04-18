@@ -51,6 +51,8 @@ PRIVATE_KEY=your_wallet_private_key
 CHAIN_ID=137
 ```
 
+> **Note:** I'm using `gpt-4o-mini` instead of `gpt-4o` to keep API costs low while experimenting.
+
 ### 4. Run an agent
 
 ```bash
