@@ -69,5 +69,5 @@ testpaths = ["tests"]
 asyncio_mode = "auto"
 # removed --cov flags so quick test runs don't require coverage report
 # -s to show print statements during debugging
-# --tb=short keeps tracebacks readable without being overwhelming
-addopts = "-v -s --tb=short"
+# --tb=long gives full tracebacks which I find easier to debug locally
+addopts = "-v -s --tb=long"
