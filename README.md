@@ -85,6 +85,8 @@ agents/
 
 - Running this in paper-trading / read-only mode for now — `POLYMARKET_API_KEY` left blank disables order placement.
 - Useful reference for understanding the agent loop: `agents/agent.py` → `run()` method.
+- Tested on Python 3.11.9; haven't tried 3.12 yet.
+- The agent loop runs every 60s by default — bumped mine to 120s to reduce API calls during testing.
 
 ## Contributing
 
