@@ -12,6 +12,9 @@ load_dotenv()
 
 logger = get_logger(__name__)
 
+# Default poll interval increased to 5 minutes to avoid hammering the API
+DEFAULT_POLL_INTERVAL = "300"
+
 
 def main():
     """Initialize and run the trading agent loop."""
@@ -34,7 +37,7 @@ def main():
         openai_api_key=openai_api_key,
     )
 
-    poll_interval = int(os.getenv("POLL_INTERVAL", "60"))
+    poll_interval = int(os.getenv("POLL_INTERVAL", DEFAULT_POLL_INTERVAL))
 
     while True:
         try:
