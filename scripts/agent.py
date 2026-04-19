@@ -15,6 +15,9 @@ logger = get_logger(__name__)
 # Default poll interval increased to 5 minutes to avoid hammering the API
 DEFAULT_POLL_INTERVAL = "300"
 
+# Maximum number of consecutive errors before giving up
+MAX_CONSECUTIVE_ERRORS = 5
+
 
 def main():
     """Initialize and run the trading agent loop."""
@@ -38,16 +41,25 @@ def main():
     )
 
     poll_interval = int(os.getenv("POLL_INTERVAL", DEFAULT_POLL_INTERVAL))
+    consecutive_errors = 0
 
     while True:
         try:
             logger.info("Running agent cycle...")
             agent.run()
+            consecutive_errors = 0
         except KeyboardInterrupt:
             logger.info("Agent stopped by user.")
             break
         except Exception as e:
             logger.exception("Unhandled error during agent cycle: %s", e)
+            consecutive_errors += 1
+            if consecutive_errors >= MAX_CONSECUTIVE_ERRORS:
+                logger.error(
+                    "Reached %d consecutive errors, stopping agent.",
+                    MAX_CONSECUTIVE_ERRORS,
+                )
+                break
 
         logger.info("Sleeping for %d seconds...", poll_interval)
         time.sleep(poll_interval)
