@@ -70,4 +70,5 @@ asyncio_mode = "auto"
 # removed --cov flags so quick test runs don't require coverage report
 # -s to show print statements during debugging
 # --tb=long gives full tracebacks which I find easier to debug locally
-addopts = "-v -s --tb=long"
+# --lf re-runs only last failed tests first, speeds up iteration when fixing failures
+addopts = "-v -s --tb=long --lf"
