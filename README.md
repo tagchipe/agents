@@ -90,6 +90,7 @@ agents/
 - Noticed the agent sometimes errors silently when a market has no open orders; added a `try/except` around the order fetch in my local copy (`connectors/clob.py` ~line 84).
 - Logging was pretty sparse, so I added a basic file handler in `utils/logger.py` to write logs to `agent.log` — handy for reviewing what happened after a run.
 - Set `MAX_MARKETS` to 5 (down from 20) so each run stays focused and finishes faster during testing — too many markets at once made the LLM calls expensive.
+- Added a `MIN_LIQUIDITY` threshold (set to $500) to skip thinly-traded markets — the agent was wasting LLM calls on markets with almost no volume.
 
 ## Contributing
 
