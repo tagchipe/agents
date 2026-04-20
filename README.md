@@ -91,6 +91,7 @@ agents/
 - Logging was pretty sparse, so I added a basic file handler in `utils/logger.py` to write logs to `agent.log` — handy for reviewing what happened after a run.
 - Set `MAX_MARKETS` to 5 (down from 20) so each run stays focused and finishes faster during testing — too many markets at once made the LLM calls expensive.
 - Added a `MIN_LIQUIDITY` threshold (set to $500) to skip thinly-traded markets — the agent was wasting LLM calls on markets with almost no volume.
+- Added a `MIN_DAYS_TO_CLOSE` threshold (set to 3 days) to skip markets that are closing imminently — not enough time to be worth the call, and the odds are usually already baked in.
 
 ## Contributing
 
