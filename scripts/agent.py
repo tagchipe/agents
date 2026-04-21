@@ -25,6 +25,10 @@ MAX_CONSECUTIVE_ERRORS = 3
 # Bumped from 30 to 60 - 30s felt too aggressive when the API is having issues
 ERROR_RETRY_DELAY = 60
 
+# Back off multiplier: each consecutive error waits a bit longer before retry.
+# e.g. 1st error: 60s, 2nd error: 120s. Avoids hammering a struggling API.
+ERROR_RETRY_BACKOFF = 2
+
 
 def main():
     """Initialize and run the trading agent loop."""
@@ -67,9 +71,10 @@ def main():
                     MAX_CONSECUTIVE_ERRORS,
                 )
                 break
-            # On error, use a shorter retry delay rather than the full poll interval
-            logger.info("Error encountered, retrying in %d seconds...", ERROR_RETRY_DELAY)
-            time.sleep(ERROR_RETRY_DELAY)
+            # Apply exponential backoff so repeated failures wait progressively longer
+            retry_delay = ERROR_RETRY_DELAY * (ERROR_RETRY_BACKOFF ** (consecutive_errors - 1))
+            logger.info("Error encountered, retrying in %d seconds...", retry_delay)
+            time.sleep(retry_delay)
             continue
 
         logger.info("Sleeping for %d seconds...", poll_interval)
