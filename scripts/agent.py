@@ -16,7 +16,9 @@ logger = get_logger(__name__)
 DEFAULT_POLL_INTERVAL = "300"
 
 # Maximum number of consecutive errors before giving up
-MAX_CONSECUTIVE_ERRORS = 5
+# Reduced from 5 to 3 - I'd rather have the agent stop sooner and alert me
+# than silently retry many times with a broken state
+MAX_CONSECUTIVE_ERRORS = 3
 
 
 def main():
