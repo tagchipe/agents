@@ -22,7 +22,8 @@ MAX_CONSECUTIVE_ERRORS = 3
 
 # How long to wait (seconds) before retrying after an error, instead of
 # immediately sleeping the full poll interval. Helps recover faster.
-ERROR_RETRY_DELAY = 30
+# Bumped from 30 to 60 - 30s felt too aggressive when the API is having issues
+ERROR_RETRY_DELAY = 60
 
 
 def main():
