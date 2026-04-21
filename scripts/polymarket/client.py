@@ -16,6 +16,9 @@ from py_clob_client.constants import POLYGON
 GAMMA_API_BASE = "https://gamma-api.polymarket.com"
 CLOB_API_BASE = "https://clob.polymarket.com"
 
+# Default timeout (seconds) for all outbound HTTP requests
+DEFAULT_TIMEOUT = 30
+
 
 class PolymarketClient:
     """Client for interacting with Polymarket APIs.
@@ -90,48 +93,7 @@ class PolymarketClient:
             "closed": str(closed).lower(),
         }
         response = requests.get(
-            f"{GAMMA_API_BASE}/markets", params=params, timeout=10
+            f"{GAMMA_API_BASE}/markets", params=params, timeout=DEFAULT_TIMEOUT
         )
         response.raise_for_status()
         return response.json()
-
-    def get_market(self, condition_id: str) -> dict[str, Any]:
-        """Fetch a single market by its condition ID.
-
-        Args:
-            condition_id: The market's condition ID.
-
-        Returns:
-            Market object with full metadata.
-        """
-        response = requests.get(
-            f"{GAMMA_API_BASE}/markets/{condition_id}", timeout=10
-        )
-        response.raise_for_status()
-        return response.json()
-
-    def get_orderbook(self, token_id: str) -> dict[str, Any]:
-        """Fetch the current orderbook for a market token.
-
-        Args:
-            token_id: The token ID (outcome token) to query.
-
-        Returns:
-            Orderbook with bids and asks.
-        """
-        return self.clob.get_order_book(token_id)
-
-    def get_last_trade_price(self, token_id: str) -> Optional[float]:
-        """Get the last traded price for a token.
-
-        Args:
-            token_id: The token ID to query.
-
-        Returns:
-            Last trade price as a float, or None if unavailable.
-        """
-        try:
-            price_data = self.clob.get_last_trade_price(token_id)
-            return float(price_data.get("price", 0))
-        except Exception:
-            return None
