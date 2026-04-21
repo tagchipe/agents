@@ -20,6 +20,10 @@ DEFAULT_POLL_INTERVAL = "300"
 # than silently retry many times with a broken state
 MAX_CONSECUTIVE_ERRORS = 3
 
+# How long to wait (seconds) before retrying after an error, instead of
+# immediately sleeping the full poll interval. Helps recover faster.
+ERROR_RETRY_DELAY = 30
+
 
 def main():
     """Initialize and run the trading agent loop."""
@@ -62,6 +66,10 @@ def main():
                     MAX_CONSECUTIVE_ERRORS,
                 )
                 break
+            # On error, use a shorter retry delay rather than the full poll interval
+            logger.info("Error encountered, retrying in %d seconds...", ERROR_RETRY_DELAY)
+            time.sleep(ERROR_RETRY_DELAY)
+            continue
 
         logger.info("Sleeping for %d seconds...", poll_interval)
         time.sleep(poll_interval)
